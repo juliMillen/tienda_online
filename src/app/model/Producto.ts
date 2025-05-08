@@ -1,3 +1,3 @@
 export class Producto{
-    constructor(public string)
+    constructor(public descripcion:string, public precio:number) {}
 }
