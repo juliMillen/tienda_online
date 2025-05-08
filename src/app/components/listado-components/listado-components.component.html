@@ -3,8 +3,8 @@
     <ul class="list-group w-50 mx-auto">
         @for (prod of listaProductos; track prod) {
             <li class="list-group-item text-center">
-                {{prod.descripcion}}
-                {{prod.precio}}
+                {{prod.descripcion}},
+                ${{prod.precio}}
             </li>
         }
     </ul>
