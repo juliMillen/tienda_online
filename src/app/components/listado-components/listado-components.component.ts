@@ -1,38 +1,27 @@
 import { Component } from '@angular/core';
 import { Producto } from '../../model/Producto';
 import { FormsModule } from '@angular/forms';
+import { FormularioComponent } from "../formulario/formulario.component";
+import { ProductoComponent } from "../producto/producto.component";
 
 @Component({
   selector: 'app-listado-components',
-  imports: [FormsModule],
+  imports: [FormsModule, FormularioComponent, ProductoComponent],
   templateUrl: './listado-components.component.html',
   styleUrl: './listado-components.component.css'
 })
 
 
 export class ListadoComponentsComponent {
+
   listaProductos: Producto[] = [
     new Producto('Chaqueta Cuero',200),
     new Producto('Camisa cuadros',80),
     new Producto('Remera S',60)
   ];
 
+  agregarProducto(producto: Producto) {
+    this.listaProductos.push(producto);
+  }
 
-  descripcionInput: string = '';
-  precioInput: number | null =null;
-
-  agregarProducto() {
-      // validar que sean valores correctos
-      if(this.descripcionInput.trim() === '' || this.precioInput == null || this.precioInput == 0){
-        console.log('Debe ingresar una descripcion y un precio validos');
-        return;
-      }
-
-      const producto = new Producto(this.descripcionInput,this.precioInput);
-      this.listaProductos.push(producto);
-
-      //limpiar campos
-      this.descripcionInput = '';
-      this.precioInput = null;
-    }
 }
