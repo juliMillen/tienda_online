@@ -14,6 +14,12 @@
             Agregar Producto
         </button>
 
+        @if (productoId !== null) {
+            <button type="button" class="btn btn-warning mx-3" (click)="eliminarProducto()">
+                Eliminar Producto
+            </button>
+        }
+
         <button type="button" class="btn btn-danger mx-3" (click)="cancelar()">
             Cancelar
         </button>

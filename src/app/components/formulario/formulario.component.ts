@@ -2,7 +2,7 @@ import { Component, ElementRef, EventEmitter, Output, ViewChild } from '@angular
 import { Producto } from '../../model/Producto';
 import { FormsModule } from '@angular/forms';
 import { ProductoService } from '../../services/producto.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-formulario',
@@ -11,11 +11,25 @@ import { Router } from '@angular/router';
   styleUrl: './formulario.component.css'
 })
 export class FormularioComponent {
+  productoId: number | null = null;
   descripcionInput: string = '';
   precioInput: number | null = null;
 
-  constructor(private productoService: ProductoService, private router:Router) {
+  constructor(private productoService: ProductoService, private router:Router, private route:ActivatedRoute) {
+  }
 
+  ngOnInit(){
+    //verificar si debemos cargar un producto ya existente
+    const id = this.route.snapshot.paramMap.get('id');
+    if(id){
+      const producto = this.productoService.getProductoById(Number(id));
+      if(producto){
+        //cargar informacion si se encuentra un producto valido
+        this.productoId = producto.id;
+        this.descripcionInput = producto.descripcion;
+        this.precioInput = producto.precio;
+      }
+    }
   }
 
 
@@ -28,14 +42,13 @@ export class FormularioComponent {
         return;
       }
 
-      const producto = new Producto(this.descripcionInput,this.precioInput);
+      const producto = new Producto(this.productoId,this.descripcionInput,this.precioInput);
       
       // agrego el nuevo producto usando el servicio
-      this.productoService.agregarProducto(producto);
+      this.productoService.guardarProducto(producto);
 
       //limpiar campos
-      this.descripcionInput = '';
-      this.precioInput= null;
+      this.limpiarFormulario();
 
       //redirigir al inicio
       this.router.navigate(['/'])
@@ -45,5 +58,21 @@ export class FormularioComponent {
     cancelar(){
       //redirige hacia el inicio
       this.router.navigate(['/']);
+    }
+
+
+    eliminarProducto(){
+      if(this.productoId !== null){
+        this.productoService.eliminarProducto(this.productoId);
+        this.limpiarFormulario();
+        this.router.navigate(['/']);
+
+      }
+    }
+
+    limpiarFormulario(){
+      this.productoId = null;
+      this.descripcionInput= '';
+      this.precioInput= null;
     }
 }
