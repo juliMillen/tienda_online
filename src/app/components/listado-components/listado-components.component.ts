@@ -16,15 +16,18 @@ import { Router } from '@angular/router';
 export class ListadoComponentsComponent {
 
 
-  listaProductos: Producto[] = [];
+  productos: {[llave:string]:Producto} = {};
 
   constructor(private productoService: ProductoService, private router: Router) {
   }
 
   ngOnInit() {
-    //Inicializar los productos
-    this.listaProductos = this.productoService.productos;
+    this.cargarProductos();
 
+  }
+
+  cargarProductos(){
+    this.productoService.
   }
 
   agregarProducto(){

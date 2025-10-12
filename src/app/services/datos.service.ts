@@ -1,0 +1,19 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Observable } from 'rxjs';
+import { Producto } from '../model/Producto';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class DatosService {
+
+
+  url = 'https://tienda-online-db403-default-rtdb.firebaseio.com/';
+
+  constructor(private httpClient: HttpClient) { }
+
+  getProductos(): Observable<{[llave:string]:Producto}>{
+    return this.httpClient.get<{[llave:string]:Producto}>(this.url + 'datos.json');
+  }
+}
