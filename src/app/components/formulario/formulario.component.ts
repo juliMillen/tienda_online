@@ -11,7 +11,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrl: './formulario.component.css'
 })
 export class FormularioComponent {
-  productoId: number | null = null;
+  llaveProducto: string | null = null;
   descripcionInput: string = '';
   precioInput: number | null = null;
 
@@ -20,12 +20,12 @@ export class FormularioComponent {
 
   ngOnInit(){
     //verificar si debemos cargar un producto ya existente
-    const id = this.route.snapshot.paramMap.get('id');
-    if(id){
-      const producto = this.productoService.getProductoById(Number(id));
+    const llave = this.route.snapshot.paramMap.get('llave');
+    if(llave){
+      const producto = this.productoService.getProductoByLlave(llave);
       if(producto){
         //cargar informacion si se encuentra un producto valido
-        this.productoId = producto.id;
+        this.llaveProducto = llave;
         this.descripcionInput = producto.descripcion;
         this.precioInput = producto.precio;
       }
@@ -42,7 +42,7 @@ export class FormularioComponent {
         return;
       }
 
-      const producto = new Producto(this.productoId,this.descripcionInput,this.precioInput);
+      const producto = new Producto(this.descripcionInput,this.precioInput);
       
       // agrego el nuevo producto usando el servicio
       this.productoService.guardarProducto(producto);
@@ -62,8 +62,8 @@ export class FormularioComponent {
 
 
     eliminarProducto(){
-      if(this.productoId !== null){
-        this.productoService.eliminarProducto(this.productoId);
+      if(this.llaveProducto !== null){
+        //this.productoService.eliminarProducto(this.productoId);
         this.limpiarFormulario();
         this.router.navigate(['/']);
 
@@ -71,7 +71,7 @@ export class FormularioComponent {
     }
 
     limpiarFormulario(){
-      this.productoId = null;
+      this.llaveProducto = null;
       this.descripcionInput= '';
       this.precioInput= null;
     }

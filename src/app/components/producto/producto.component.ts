@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
 import { Producto } from '../../model/Producto';
-import { ProductoService } from '../../services/producto.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,14 +11,13 @@ import { Router } from '@angular/router';
 export class ProductoComponent {
 
   @Input() producto!: Producto;
+  @Input() llave!: string;
 
   constructor(private router:Router){ }
 
-  editarProducto(id:number){
+  editarProducto(){
     //pasamos el ID en la URL
-    this.router.navigate(['/editar',id])
+    this.router.navigate(['/editar',this.llave])
   }
-
-
 
 }
