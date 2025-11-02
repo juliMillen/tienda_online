@@ -1,0 +1,24 @@
+<div class="container d-flex justify-content-center align-items-center my-5">
+    <div class="card p-4 shadow-sm" style="width: 25rem;">
+        <h3 class="text-center mb-4">
+            Iniciar Sesion
+        </h3>
+        <form #f="ngForm" (ngSubmit)="f.form.valid && login(f)">
+            <!-- Campo Email-->
+             <div class="mb-3">
+                <input type="email" class="form-control" id="email" name="email" placeholder="miemail@gmail.com" ngModel required />
+
+             </div>
+
+            <!--Campo Password-->
+            <div class="mb-3">
+                <input type="password" class="form-control" id="password" name="password" placeholder="password" ngModel required />
+            </div>
+
+            <!--Boton de login-->
+            <button type="submit" class="btn btn-primary w-100">
+                Iniciar Sesion
+            </button>
+        </form>
+    </div>
+</div>
